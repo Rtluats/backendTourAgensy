@@ -1,0 +1,35 @@
+package com.spring.multimodule.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Table
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PriceList {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@Column
+	private Double price;
+	@Column
+	private Double discount;
+	@Column
+	private Date departureDate;
+	@Column
+	private Integer numberOfDays;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "hotel_id")
+	private Hotel hotel;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "tour_id")
+	private Tour tour;
+}
