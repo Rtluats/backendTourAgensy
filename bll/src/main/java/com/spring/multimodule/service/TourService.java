@@ -26,6 +26,12 @@ public class TourService {
 				.collect(Collectors.toList());
 	}
 
+	public List<TourDto> getByTourTitle(String title){
+		return repository.findByTitleContainsAndOrderByTitle(title).stream()
+				.map(mapper::toDto)
+				.collect(Collectors.toList());w
+	}
+
 	public TourDto getById(Long id){
 		return mapper.toDto(repository.getOne(id));
 	}

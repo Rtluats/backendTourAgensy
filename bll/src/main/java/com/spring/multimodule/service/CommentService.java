@@ -33,8 +33,13 @@ public class CommentService {
 		//));
 	}
 
-	public CommentDto save(CommentDto ent){
+	public List<CommentDto> findAllByPriceListIdOrderByDateTime(Long id){
+		return repository.findAllByPriceListIdOrderByDateTime(id).stream()
+				.map(mapper::toDto)
+				.collect(Collectors.toList());
+	}
 
+	public CommentDto save(CommentDto ent){
 		return mapper.toDto(repository.save(mapper.toEnt(ent)));
 	}
 

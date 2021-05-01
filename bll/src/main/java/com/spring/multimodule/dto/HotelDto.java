@@ -1,9 +1,9 @@
 package com.spring.multimodule.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.spring.multimodule.entity.City;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +19,6 @@ import java.util.List;
 public class HotelDto {
 	private Long id;
 	private String name;
-	@JsonBackReference
-	private List<PriceListDto> priceListDtoList;
+	private City city;
+	private List<PriceListDto> priceLists;
 }

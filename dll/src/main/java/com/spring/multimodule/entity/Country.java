@@ -22,5 +22,4 @@ public class Country {
 
 	@OneToMany
 	private List<City> cities;
-
 }

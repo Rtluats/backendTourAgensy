@@ -16,5 +16,5 @@ import java.util.List;
 public class CountryDto {
 	private Long id;
 	private String name;
-	private List<CountryDto> countryDtoList;
+	private List<CityDto> cities;
 }

@@ -32,6 +32,11 @@ public class TourController {
 		return manager.getById(id);
 	}
 
+	@GetMapping("/by-title/{title}")
+	public List<TourDto> getTourByTitle(@PathVariable String title){
+		return manager.getByTourTitle(title);
+	}
+
 	@PostMapping
 	@PreAuthorize("hasRole('MANAGER')")
 	public TourDto addTour(@RequestBody TourDto tour){

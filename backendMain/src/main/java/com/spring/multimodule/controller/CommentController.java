@@ -33,6 +33,12 @@ public class CommentController {
 		return ResponseEntity.ok(manager.getById(id));
 	}
 
+	@GetMapping("by-price-list-id/{id}")
+	public List<CommentDto> getCommentByPriceListDto(@PathVariable Long id){
+		return manager.findAllByPriceListIdOrderByDateTime(id);
+	}
+
+
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public CommentDto addComment(@RequestBody CommentDto commentDto){
 		return manager.save(commentDto);

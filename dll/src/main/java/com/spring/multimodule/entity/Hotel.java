@@ -24,5 +24,5 @@ public class Hotel {
 	private City city;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tour")
-	private List<PriceList> priceListList;
+	private List<PriceList> priceLists;
 }

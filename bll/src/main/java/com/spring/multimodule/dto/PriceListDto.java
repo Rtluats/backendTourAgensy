@@ -1,7 +1,6 @@
 package com.spring.multimodule.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
@@ -23,8 +22,6 @@ public class PriceListDto {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date departureDate;
 	private Integer numberOfDays;
-	@JsonManagedReference
-	private HotelDto hotelDto;
-	@JsonManagedReference
-	private TourDto tourDto;
+	private HotelDto hotel;
+	private TourDto tour;
 }
