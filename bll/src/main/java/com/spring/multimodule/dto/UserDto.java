@@ -25,6 +25,7 @@ public class UserDto implements UserDetails {
 	private String password;
 	private String email;
 	private Set<RoleDto> roles = new HashSet<>();
+	private UserInfoDto userInfo;
 
 	public UserDto(String username, String password, String email){
 		this.username = username;

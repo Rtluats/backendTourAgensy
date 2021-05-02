@@ -16,42 +16,39 @@ import java.util.Map;
 @RequestMapping("api/v1/counties")
 public class CountryController {
 
-	private final CountryService manager;
+	private final CountryService countryService;
 
 	public CountryController(CountryService manager) {
-		this.manager = manager;
+		this.countryService = manager;
 	}
 
 	@GetMapping
-	public List<CountryDto> getCountries(){
-
-		return manager.getAll();
-	}
+	public List<CountryDto> getCountries(){ return countryService.getAll(); }
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CountryDto> getCountry(@PathVariable Long id){
-		return ResponseEntity.ok(manager.getById(id));
+		return ResponseEntity.ok(countryService.getById(id));
 	}
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public CountryDto addCountry(@RequestBody CountryDto countryDto){
-		return manager.save(countryDto);
+		return countryService.save(countryDto);
 	}
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public ResponseEntity<CountryDto> updateCountry(@PathVariable Long id, @RequestBody CountryDto countryDto){
-		var countryDto1 = manager.getById(id);
+		var countryDto1 = countryService.getById(id);
 		countryDto1.setName(countryDto.getName());
-		return ResponseEntity.ok(manager.save(countryDto1));
+		countryDto1.setCities(countryDto.getCities());
+		return ResponseEntity.ok(countryService.save(countryDto1));
 	}
 
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public ResponseEntity<Map<String, Boolean>> deleteCountry(@PathVariable Long id){
-		manager.delete(manager.getById(id));
-		System.out.println(1);
+		countryService.delete(countryService.getById(id));
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);

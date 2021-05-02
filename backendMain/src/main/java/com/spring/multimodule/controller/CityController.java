@@ -16,42 +16,41 @@ import java.util.Map;
 @RequestMapping("api/v1/cities")
 public class CityController {
 
-	private final CityService manager;
+	private final CityService cityService;
 
 	public CityController(CityService manager) {
-		this.manager = manager;
+		this.cityService = manager;
 	}
 
 	@GetMapping
 	public List<CityDto> getCities(){
 
-		return manager.getAll();
+		return cityService.getAll();
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CityDto> getCity(@PathVariable Long id){
-		return ResponseEntity.ok(manager.getById(id));
+		return ResponseEntity.ok(cityService.getById(id));
 	}
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public CityDto addCity(@RequestBody CityDto cityDto){
-		return manager.save(cityDto);
+		return cityService.save(cityDto);
 	}
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public ResponseEntity<CityDto> updateCity(@PathVariable Long id, @RequestBody CityDto cityDto){
-		var cityDtoSave = manager.getById(id);
+		var cityDtoSave = cityService.getById(id);
 		cityDtoSave.setName(cityDto.getName());
-		cityDtoSave.setCountryDto(cityDto.getCountryDto());
-		return ResponseEntity.ok(manager.save(cityDtoSave));
+		return ResponseEntity.ok(cityService.save(cityDtoSave));
 	}
 
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public ResponseEntity<Map<String, Boolean>> deleteCity(@PathVariable Long id){
-		manager.delete(manager.getById(id));
+		cityService.delete(cityService.getById(id));
 		System.out.println(1);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);

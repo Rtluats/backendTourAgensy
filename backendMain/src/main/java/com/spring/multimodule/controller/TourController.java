@@ -15,48 +15,48 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/tours")
 public class TourController {
-	private final TourService manager;
+	private final TourService tourService;
 
 
 	public TourController(TourService manager) {
-		this.manager = manager;
+		this.tourService = manager;
 	}
 
 	@GetMapping
 	public List<TourDto> getTours(){
-		return manager.getAll();
+		return tourService.getAll();
 	}
 
 	@GetMapping("/{id}")
 	public TourDto getTourById(@PathVariable Long id){
-		return manager.getById(id);
+		return tourService.getById(id);
 	}
 
-	@GetMapping("/by-title/{title}")
+	@GetMapping("/byTitle/{title}")
 	public List<TourDto> getTourByTitle(@PathVariable String title){
-		return manager.getByTourTitle(title);
+		return tourService.getByTourTitle(title);
 	}
 
 	@PostMapping
 	@PreAuthorize("hasRole('MANAGER')")
 	public TourDto addTour(@RequestBody TourDto tour){
-		return manager.save(tour);
+		return tourService.save(tour);
 	}
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public ResponseEntity<TourDto> updateTour(@PathVariable Long id, @RequestBody TourDto tour){
-		var saveTour = manager.getById(id);
+		var saveTour = tourService.getById(id);
 		saveTour.setDescription(tour.getDescription());
 		//saveTour.setPriceLists(tour.getPriceLists());
 		saveTour.setTitle(tour.getTitle());
-		return ResponseEntity.ok(manager.save(saveTour));
+		return ResponseEntity.ok(tourService.save(saveTour));
 	}
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('MANAGER')")
 	public ResponseEntity<Map<String, Boolean>> deleteTour(@PathVariable Long id){
-		manager.delete(manager.getById(id));
+		tourService.delete(tourService.getById(id));
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);

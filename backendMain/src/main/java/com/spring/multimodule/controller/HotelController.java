@@ -17,43 +17,37 @@ import java.util.Map;
 @RequestMapping("/api/v1/hotels")
 public class HotelController {
 
-	private final HotelService manager;
+	private final HotelService hotelService;
 
 	public HotelController(HotelService manager) {
-		this.manager = manager;
+		this.hotelService = manager;
 	}
 
 	@GetMapping
-	public List<HotelDto> getHotels(){
-
-		return manager.getAll();
-	}
+	public List<HotelDto> getHotels(){ return hotelService.getAll(); }
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HotelDto> getHotel(@PathVariable Long id){
-		return ResponseEntity.ok(manager.getById(id));
+		return ResponseEntity.ok(hotelService.getById(id));
 	}
 	
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
-	public HotelDto addHotel(@RequestBody HotelDto hotel){
-		System.out.println(hotel);
-		return manager.save(hotel);
-	}
+	public HotelDto addHotel(@RequestBody HotelDto hotel){ return hotelService.save(hotel); }
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public ResponseEntity<HotelDto> updateHotel(@PathVariable Long id, @RequestBody HotelDto hotel){
-		var saveHotel = manager.getById(id);
+		var saveHotel = hotelService.getById(id);
 		saveHotel.setName(hotel.getName());
-		return ResponseEntity.ok(manager.save(saveHotel));
+		saveHotel.setCity(hotel.getCity());
+		return ResponseEntity.ok(hotelService.save(saveHotel));
 	}
 
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
 	public ResponseEntity<Map<String, Boolean>> deleteHotel(@PathVariable Long id){
-		manager.delete(manager.getById(id));
-		System.out.println(1);
+		hotelService.delete(hotelService.getById(id));
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);

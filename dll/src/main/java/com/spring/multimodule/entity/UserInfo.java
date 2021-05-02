@@ -27,7 +27,7 @@ public class UserInfo {
 	@Column
 	private String phone;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
 
 	@OneToMany

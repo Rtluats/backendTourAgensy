@@ -20,7 +20,7 @@ public class Hotel {
 	@Column
 	private String name;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private City city;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tour")

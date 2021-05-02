@@ -19,5 +19,6 @@ public class CommentDto {
 	private String message;
 	@CreationTimestamp
 	private LocalDateTime localDateTime;
+	private PriceListDto priceList;
 	private UserInfoDto userInfo;
 }

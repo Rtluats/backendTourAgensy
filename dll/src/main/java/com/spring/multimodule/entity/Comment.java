@@ -25,9 +25,9 @@ public class Comment {
 	@CreationTimestamp
 	private LocalDateTime dateTime;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private PriceList priceList;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private UserInfo userInfo;
 }

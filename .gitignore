@@ -1,4 +1,6 @@
 .idea/*
+bll/src/main/java/com/spring/multimodule/service/MailSender.java
+bll/src/main/java/com/spring/multimodule/service/MailService.java
 
 
 target/*
