@@ -27,9 +27,9 @@ public class TourService {
 	}
 
 	public List<TourDto> getByTourTitle(String title){
-		return repository.findByTitleContainsAndOrderByTitle(title).stream()
+		return repository.findByTitleContainsOrderByTitle(title).stream()
 				.map(mapper::toDto)
-				.collect(Collectors.toList());w
+				.collect(Collectors.toList());
 	}
 
 	public TourDto getById(Long id){

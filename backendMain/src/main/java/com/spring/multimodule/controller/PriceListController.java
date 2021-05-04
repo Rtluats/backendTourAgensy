@@ -1,20 +1,22 @@
 package com.spring.multimodule.controller;
 
 
+import com.spring.multimodule.dto.GroupDto;
 import com.spring.multimodule.dto.PriceListDto;
 import com.spring.multimodule.dto.UserDto;
+import com.spring.multimodule.dto.UserInfoDto;
 import com.spring.multimodule.payload.response.MessageResponse;
 import com.spring.multimodule.service.MailService;
 import com.spring.multimodule.service.PriceListService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.multimodule.service.UserInfoService;
+import com.spring.multimodule.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
@@ -22,10 +24,14 @@ import java.util.Map;
 public class PriceListController {
 	private final MailService mailService;
 	private final PriceListService priceListService;
+	private final UserService userService;
+	private final UserInfoService userInfoService;
 
-	public PriceListController(PriceListService manager, MailService mailService) {
+	public PriceListController(PriceListService manager, MailService mailService, UserService userService, UserInfoService userInfoService) {
 		this.priceListService = manager;
 		this.mailService = mailService;
+		this.userService = userService;
+		this.userInfoService = userInfoService;
 	}
 
 	@GetMapping
@@ -49,8 +55,20 @@ public class PriceListController {
 
 	@PostMapping("/byuATour/{id}")
 	@PreAuthorize("hasAnyRole('USER')")
-	public ResponseEntity<?> buyATour(@PathVariable Long id, @Autowired UserDto user){
+	public ResponseEntity<?> buyATour(@PathVariable Long id, Authentication authentication){
 		try {
+			UserDto user = userService.findByUserName(authentication.getName());
+			UserInfoDto info = userInfoService.getById(user.getUserInfo().getId());
+			PriceListDto priceList = priceListService.getById(id);
+			if (priceList.getGroup() != null){
+				priceList.setGroup(new GroupDto());
+				priceList.getGroup().setPriceList(priceList);
+				priceList.getGroup().setUserInfoList(new HashSet<>());
+				priceList.getGroup().getUserInfoList().add(info);
+				info.getGroups().add(priceList.getGroup());
+				priceListService.save(priceList); // ?? достаточно?
+			}
+
 			mailService.sendDocToEmail(user.getEmail(), priceListService.getById(id).getTour().getTitle());
 		}catch (Exception ex){
 			ResponseEntity.badRequest()

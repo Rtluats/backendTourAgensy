@@ -34,7 +34,7 @@ public class CommentService {
 	}
 
 	public List<CommentDto> findAllByPriceListIdOrderByDateTime(Long id){
-		return repository.findAllByPriceListIdOrderByDateTime(id).stream()
+		return repository.findAllByPriceListIdOrderByLocalDateTime(id).stream()
 				.map(mapper::toDto)
 				.collect(Collectors.toList());
 	}

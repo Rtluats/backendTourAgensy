@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -30,6 +31,9 @@ public class UserInfo {
 	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
 
-	@OneToMany
+	@OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
 	private List<Comment> comments;
+
+	@ManyToMany(mappedBy = "userInfoList")
+	private Set<Group> groups;
 }

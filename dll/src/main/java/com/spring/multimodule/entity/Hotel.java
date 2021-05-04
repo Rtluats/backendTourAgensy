@@ -23,6 +23,6 @@ public class Hotel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private City city;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tour")
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
 	private List<PriceList> priceLists;
 }

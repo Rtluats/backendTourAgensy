@@ -25,6 +25,11 @@ public class PriceList {
 	@Column
 	private Integer numberOfDays;
 
+	@Lob
+	@Column
+	private byte[] image;
+
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
@@ -32,4 +37,7 @@ public class PriceList {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tour_id")
 	private Tour tour;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Group group;
 }

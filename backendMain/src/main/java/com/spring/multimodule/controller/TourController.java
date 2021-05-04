@@ -48,7 +48,6 @@ public class TourController {
 	public ResponseEntity<TourDto> updateTour(@PathVariable Long id, @RequestBody TourDto tour){
 		var saveTour = tourService.getById(id);
 		saveTour.setDescription(tour.getDescription());
-		//saveTour.setPriceLists(tour.getPriceLists());
 		saveTour.setTitle(tour.getTitle());
 		return ResponseEntity.ok(tourService.save(saveTour));
 	}

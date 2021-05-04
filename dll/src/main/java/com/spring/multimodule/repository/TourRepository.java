@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long> {
-	List<Tour> findByTitleContainsAndOrderByTitle(String title);
+	List<Tour> findByTitleContainsOrderByTitle(String title);
 }

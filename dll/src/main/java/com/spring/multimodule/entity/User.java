@@ -49,7 +49,7 @@ public class User implements UserDetails {
 	)
 	private Set<Role> roles = new HashSet<>();
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private UserInfo userInfo;
 
 	@Override

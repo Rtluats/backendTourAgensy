@@ -22,6 +22,8 @@ public class PriceListDto {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date departureDate;
 	private Integer numberOfDays;
+	private byte[] image;
 	private HotelDto hotel;
 	private TourDto tour;
+	private GroupDto group;
 }
