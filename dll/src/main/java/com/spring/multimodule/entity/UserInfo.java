@@ -30,6 +30,9 @@ public class UserInfo {
 	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
 
-	@OneToMany
+	@OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
 	private List<Comment> comments;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Group group;
 }

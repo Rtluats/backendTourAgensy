@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -25,6 +26,11 @@ public class PriceList {
 	@Column
 	private Integer numberOfDays;
 
+	@Lob
+	@Column
+	private byte[] image;
+
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
@@ -32,4 +38,7 @@ public class PriceList {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "tour_id")
 	private Tour tour;
+
+	@OneToMany(mappedBy = "priceList", cascade = CascadeType.ALL)
+	private List<Group> groups;
 }

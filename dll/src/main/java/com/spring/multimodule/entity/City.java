@@ -20,10 +20,10 @@ public class City {
 	@Column
 	private String name;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Country country;
 
-	@OneToMany
+	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
 	private List<Hotel> hotels;
 
 }

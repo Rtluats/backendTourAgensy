@@ -22,6 +22,6 @@ public class Tour {
 	@Column
 	private String description;
 
-	@OneToMany(mappedBy = "tour")
+	@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
 	private List<PriceList> priceLists;
 }

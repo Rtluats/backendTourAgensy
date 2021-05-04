@@ -1,6 +1,5 @@
 package com.spring.multimodule.service;
 
-import com.spring.multimodule.dto.RoleDto;
 import com.spring.multimodule.dto.UserDto;
 import com.spring.multimodule.entity.User;
 import com.spring.multimodule.mapper.UserMapper;
@@ -12,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,16 +25,16 @@ public class UserService implements UserDetailsService {
 		this.mapper = mapper;
 	}
 
-	public static UserDto build(UserDto user) {
-		Set<RoleDto> authorities = user.getRoles();
-
-		return new UserDto(
-				user.getId(),
-				user.getUsername(),
-				user.getEmail(),
-				user.getPassword(),
-				authorities);
-	}
+//	public static UserDto build(UserDto user) {
+//		Set<RoleDto> authorities = user.getRoles();
+//
+//		return new UserDto(
+//				user.getId(),
+//				user.getUsername(),
+//				user.getEmail(),
+//				user.getPassword(),
+//				authorities);
+//	}
 
 
 	public List<UserDto> getAll(){

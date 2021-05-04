@@ -20,6 +20,6 @@ public class Country {
 	@Column
 	private String name;
 
-	@OneToMany
+	@OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
 	private List<City> cities;
 }

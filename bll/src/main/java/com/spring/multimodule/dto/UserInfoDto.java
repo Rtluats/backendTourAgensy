@@ -20,4 +20,5 @@ public class UserInfoDto {
 	private String phone;
 	private UserDto user;
 	private List<CommentDto> comments;
+	private GroupDto group;
 }
