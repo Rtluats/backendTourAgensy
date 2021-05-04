@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "grp")
@@ -22,7 +22,7 @@ public class Group {
 			joinColumns = {@JoinColumn(name = "grp_id", referencedColumnName = "id")},
 			inverseJoinColumns = {@JoinColumn(name="user_info_id", referencedColumnName = "id")}
 	)
-	private List<UserInfo> userInfoList;
+	private Set<UserInfo> userInfoList;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private PriceList priceList;

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -20,5 +21,5 @@ public class UserInfoDto {
 	private String phone;
 	private UserDto user;
 	private List<CommentDto> comments;
-	private List<GroupDto> groups;
+	private Set<GroupDto> groups;
 }

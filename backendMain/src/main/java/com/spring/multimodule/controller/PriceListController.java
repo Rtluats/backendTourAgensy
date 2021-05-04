@@ -16,9 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
@@ -65,9 +63,11 @@ public class PriceListController {
 			if (priceList.getGroup() != null){
 				priceList.setGroup(new GroupDto());
 				priceList.getGroup().setPriceList(priceList);
-				priceList.getGroup().set
+				priceList.getGroup().setUserInfoList(new HashSet<>());
+				priceList.getGroup().getUserInfoList().add(info);
+				info.getGroups().add(priceList.getGroup());
+				priceListService.save(priceList); // ?? достаточно?
 			}
-
 
 			mailService.sendDocToEmail(user.getEmail(), priceListService.getById(id).getTour().getTitle());
 		}catch (Exception ex){

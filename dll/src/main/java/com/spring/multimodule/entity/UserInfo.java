@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -34,5 +35,5 @@ public class UserInfo {
 	private List<Comment> comments;
 
 	@ManyToMany(mappedBy = "userInfoList")
-	private List<Group> groups;
+	private Set<Group> groups;
 }
