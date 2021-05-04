@@ -23,7 +23,7 @@ public class Comment {
 
 	@Column
 	@CreationTimestamp
-	private LocalDateTime dateTime;
+	private LocalDateTime localDateTime;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private PriceList priceList;

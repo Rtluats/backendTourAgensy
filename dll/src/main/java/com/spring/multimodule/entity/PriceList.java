@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table
@@ -39,6 +38,6 @@ public class PriceList {
 	@JoinColumn(name = "tour_id")
 	private Tour tour;
 
-	@OneToMany(mappedBy = "priceList", cascade = CascadeType.ALL)
-	private List<Group> groups;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Group group;
 }

@@ -33,6 +33,6 @@ public class UserInfo {
 	@OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Group group;
+	@ManyToMany(mappedBy = "userInfoList")
+	private List<Group> groups;
 }

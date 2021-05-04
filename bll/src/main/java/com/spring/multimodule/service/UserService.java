@@ -69,6 +69,10 @@ public class UserService implements UserDetailsService {
 		return repository.existsByEmail(email);
 	}
 
+	public UserDto findByUserName(String username){
+		return mapper.toDto(repository.findByUsername(username));
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = repository.findByUsername(username);
