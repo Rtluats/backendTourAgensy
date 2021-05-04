@@ -17,7 +17,7 @@ public class Group {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@ManyToMany(mappedBy = "groups")
+	@ManyToMany
 	@JoinTable(name = "grp_user_info",
 			joinColumns = {@JoinColumn(name = "grp_id", referencedColumnName = "id")},
 			inverseJoinColumns = {@JoinColumn(name="user_info_id", referencedColumnName = "id")}
