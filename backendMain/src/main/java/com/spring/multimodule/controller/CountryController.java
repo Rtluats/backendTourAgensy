@@ -1,6 +1,8 @@
 package com.spring.multimodule.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.spring.multimodule.dto.CountryDto;
+import com.spring.multimodule.json.JsonCountryView;
 import com.spring.multimodule.service.CountryService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
-@RequestMapping("api/v1/counties")
+@RequestMapping("api/v1/countries")
 public class CountryController {
 
 	private final CountryService countryService;
@@ -23,25 +25,32 @@ public class CountryController {
 	}
 
 	@GetMapping
-	public List<CountryDto> getCountries(){ return countryService.getAll(); }
+	@JsonView(JsonCountryView.IdNameCities.class)
+	public List<CountryDto> getCountries(){
+		return countryService.getAll();
+	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@JsonView(JsonCountryView.IdNameCities.class)
 	public ResponseEntity<CountryDto> getCountry(@PathVariable Long id){
 		return ResponseEntity.ok(countryService.getById(id));
 	}
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
+	@JsonView(JsonCountryView.IdNameCities.class)
 	public CountryDto addCountry(@RequestBody CountryDto countryDto){
 		return countryService.save(countryDto);
 	}
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
+	@JsonView(JsonCountryView.IdNameCities.class)
 	public ResponseEntity<CountryDto> updateCountry(@PathVariable Long id, @RequestBody CountryDto countryDto){
 		var countryDto1 = countryService.getById(id);
 		countryDto1.setName(countryDto.getName());
 		countryDto1.setCities(countryDto.getCities());
+		System.out.println(countryDto1);
 		return ResponseEntity.ok(countryService.save(countryDto1));
 	}
 

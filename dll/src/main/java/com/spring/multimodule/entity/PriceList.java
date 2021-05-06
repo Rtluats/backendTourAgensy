@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -25,9 +26,9 @@ public class PriceList {
 	@Column
 	private Integer numberOfDays;
 
-	@Lob
-	@Column
-	private byte[] image;
+//	@Lob
+//	@Column
+//	private byte[] image;
 
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -40,4 +41,8 @@ public class PriceList {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Group group;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Comment> comments;
+
 }

@@ -1,10 +1,12 @@
 package com.spring.multimodule.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.spring.multimodule.dto.GroupDto;
 import com.spring.multimodule.dto.PriceListDto;
 import com.spring.multimodule.dto.UserDto;
 import com.spring.multimodule.dto.UserInfoDto;
+import com.spring.multimodule.json.JsonPriceListView;
 import com.spring.multimodule.payload.response.MessageResponse;
 import com.spring.multimodule.service.MailService;
 import com.spring.multimodule.service.PriceListService;
@@ -35,20 +37,24 @@ public class PriceListController {
 	}
 
 	@GetMapping
+	@JsonView(JsonPriceListView.IdPriceDiscountNumberOfDaysHotel.class)
 	public List<PriceListDto> getPriceLists(){
 		return priceListService.getAll();
 	}
 
 	@GetMapping("/{name}")
+	@JsonView(JsonPriceListView.IdPriceDiscountNumberOfDaysHotel.class)
 	public List<PriceListDto> getPriceListsByCityName(@PathVariable String name){ return priceListService.getPriceListByCityName(name); }
 
 	@GetMapping("/{id}")
+	@JsonView(JsonPriceListView.IdPriceDiscountNumberOfDaysHotel.class)
 	public PriceListDto getPriceListById(@PathVariable Long id){
 		return priceListService.getById(id);
 	}
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
+	@JsonView(JsonPriceListView.IdPriceDiscountNumberOfDaysHotel.class)
 	public PriceListDto addPriceList(@RequestBody PriceListDto priceList){
 		return priceListService.save(priceList);
 	}
@@ -80,6 +86,7 @@ public class PriceListController {
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
+	@JsonView(JsonPriceListView.IdPriceDiscountNumberOfDaysHotel.class)
 	public ResponseEntity<PriceListDto> updatePriceList(@PathVariable Long id, @RequestBody PriceListDto priceList){
 		var savePriceList = priceListService.getById(id);
 		savePriceList.setPrice(priceList.getPrice());
@@ -92,6 +99,7 @@ public class PriceListController {
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('MANAGER')")
+	@JsonView(JsonPriceListView.IdPriceDiscountNumberOfDaysHotel.class)
 	public ResponseEntity<Map<String, Boolean>> deletePriceList(@PathVariable Long id){
 		priceListService.delete(priceListService.getById(id));
 		Map<String, Boolean> response = new HashMap<>();

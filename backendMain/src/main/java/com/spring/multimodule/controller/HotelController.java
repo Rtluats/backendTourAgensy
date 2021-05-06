@@ -1,7 +1,9 @@
 package com.spring.multimodule.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.spring.multimodule.dto.HotelDto;
+import com.spring.multimodule.json.JsonHotelView;
 import com.spring.multimodule.service.HotelService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,19 +26,25 @@ public class HotelController {
 	}
 
 	@GetMapping
+	@JsonView(JsonHotelView.IdNameCityPriceList.class)
 	public List<HotelDto> getHotels(){ return hotelService.getAll(); }
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@JsonView(JsonHotelView.IdNameCityPriceList.class)
 	public ResponseEntity<HotelDto> getHotel(@PathVariable Long id){
 		return ResponseEntity.ok(hotelService.getById(id));
 	}
 	
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
-	public HotelDto addHotel(@RequestBody HotelDto hotel){ return hotelService.save(hotel); }
+	@JsonView(JsonHotelView.IdNameCityPriceList.class)
+	public HotelDto addHotel(@RequestBody HotelDto hotel) {
+		return hotelService.save(hotel);
+	}
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
+	@JsonView(JsonHotelView.IdNameCityPriceList.class)
 	public ResponseEntity<HotelDto> updateHotel(@PathVariable Long id, @RequestBody HotelDto hotel){
 		var saveHotel = hotelService.getById(id);
 		saveHotel.setName(hotel.getName());

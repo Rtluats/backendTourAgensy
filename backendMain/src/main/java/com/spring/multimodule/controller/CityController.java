@@ -1,6 +1,8 @@
 package com.spring.multimodule.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.spring.multimodule.dto.CityDto;
+import com.spring.multimodule.json.JsonCityView;
 import com.spring.multimodule.service.CityService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class CityController {
 	}
 
 	@GetMapping
+	@JsonView(JsonCityView.IdNameCountryHotel.class)
 	public List<CityDto> getCities(){
 
 		return cityService.getAll();
@@ -35,12 +38,14 @@ public class CityController {
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
+	@JsonView(JsonCityView.IdName.class)
 	public CityDto addCity(@RequestBody CityDto cityDto){
 		return cityService.save(cityDto);
 	}
 
 	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('MANAGER')")
+	@JsonView(JsonCityView.IdName.class)
 	public ResponseEntity<CityDto> updateCity(@PathVariable Long id, @RequestBody CityDto cityDto){
 		var cityDtoSave = cityService.getById(id);
 		cityDtoSave.setName(cityDto.getName());

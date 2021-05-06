@@ -1,9 +1,8 @@
 package com.spring.multimodule.dto;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.spring.multimodule.entity.City;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.spring.multimodule.json.JsonHotelView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,11 +13,13 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonSerialize
-@JsonDeserialize
 public class HotelDto {
+	@JsonView(JsonHotelView.Id.class)
 	private Long id;
+	@JsonView(JsonHotelView.IdName.class)
 	private String name;
-	private City city;
+	@JsonView(JsonHotelView.IdNameCity.class)
+	private CityDto city;
+	@JsonView(JsonHotelView.IdNameCityPriceList.class)
 	private List<PriceListDto> priceLists;
 }

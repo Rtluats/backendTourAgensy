@@ -34,7 +34,6 @@ public class HotelService {
 	}
 
 	public HotelDto save(HotelDto ent){
-
 		return mapper.toDto(repository.save(mapper.toEnt(ent)));
 	}
 
