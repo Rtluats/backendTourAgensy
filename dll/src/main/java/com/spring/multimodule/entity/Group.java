@@ -3,8 +3,10 @@ package com.spring.multimodule.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -17,6 +19,10 @@ public class Group {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column
+	@CreationTimestamp
+	private LocalDateTime localDateTime;
+	
 	@ManyToMany
 	@JoinTable(name = "grp_user_info",
 			joinColumns = {@JoinColumn(name = "grp_id", referencedColumnName = "id")},

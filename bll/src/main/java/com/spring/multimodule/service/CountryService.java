@@ -34,8 +34,10 @@ public class CountryService {
 	}
 
 	public CountryDto save(CountryDto ent){
-		for(var el : ent.getCities()){
-			el.setCountry(ent);
+		if (ent.getCities() != null){
+			for(var el : ent.getCities()){
+				el.setCountry(ent);
+			}
 		}
 		return mapper.toDto(repository.save(mapper.toEnt(ent)));
 	}

@@ -33,6 +33,10 @@ public class UserInfoService {
 		//));
 	}
 
+	public UserInfoDto getUserInfoByUserName(String username){
+		return mapper.toDto(repository.findByUserUsername(username));
+	}
+
 	public UserInfoDto save(UserInfoDto ent){
 
 		return mapper.toDto(repository.save(mapper.toEnt(ent)));

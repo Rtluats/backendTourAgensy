@@ -23,6 +23,13 @@ public class SingUpRequest {
 	@NotBlank
 	@Size(min=8, max=20)
 	private String password;
+	@NotBlank
+	private String lastName;
+	@NotBlank
+	private String firstName;
+	@NotBlank
+	private String phone;
+
 
 	private Set<RoleDto> roles;
 }

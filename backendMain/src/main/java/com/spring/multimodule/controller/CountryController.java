@@ -40,6 +40,10 @@ public class CountryController {
 	@PreAuthorize("hasRole('MANAGER')")
 	@JsonView(JsonCountryView.IdNameCities.class)
 	public CountryDto addCountry(@RequestBody CountryDto countryDto){
+		var cities = countryDto.getCities();
+		countryDto.setCities(null);
+		countryDto = countryService.save(countryDto);
+		countryDto.setCities(cities);
 		return countryService.save(countryDto);
 	}
 
