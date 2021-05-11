@@ -62,7 +62,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser( @RequestBody SingUpRequest singUpRequest){
+	public ResponseEntity<?> registerUser(@RequestBody SingUpRequest singUpRequest){
 		if (userService.existUserByUsername(singUpRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
@@ -89,11 +89,11 @@ public class AuthController {
 
 		user.setRoles(rolesU);
 		var userInfo = new UserInfoDto();
+		user.setPassword(encoder.encode(singUpRequest.getPassword()));
 		userInfo.setFirstName(singUpRequest.getFirstName());
 		userInfo.setLastName(singUpRequest.getLastName());
 		userInfo.setPhone(singUpRequest.getPhone());
 		userInfo = userInfoService.save(userInfo);
-		user = userService.save(user);
 		user.setUserInfo(userInfo);
 		userService.save(user);
 

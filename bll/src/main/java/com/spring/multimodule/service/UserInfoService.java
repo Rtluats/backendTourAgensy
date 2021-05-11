@@ -34,7 +34,10 @@ public class UserInfoService {
 	}
 
 	public UserInfoDto getUserInfoByUserName(String username){
-		return mapper.toDto(repository.findByUserUsername(username));
+		System.out.println(repository.findAll());
+		return mapper.toDto(repository.findAll().stream()
+				.filter(i->i.getUser()!=null && i.getUser().getUsername().equals(username))
+				.findFirst().get());
 	}
 
 	public UserInfoDto save(UserInfoDto ent){

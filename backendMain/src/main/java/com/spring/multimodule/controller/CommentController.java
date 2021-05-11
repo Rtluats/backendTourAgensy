@@ -1,8 +1,11 @@
 package com.spring.multimodule.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.spring.multimodule.dto.CommentDto;
+import com.spring.multimodule.json.JsonCommentView;
 import com.spring.multimodule.service.CommentService;
 import com.spring.multimodule.service.PriceListService;
+import com.spring.multimodule.service.UserInfoService;
 import com.spring.multimodule.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,23 +22,26 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/v1/comments")
 public class CommentController {
+	private final UserInfoService userInfoService;
 	private final PriceListService priceListService;
 	private final CommentService commentService;
 	private final UserService userService;
 
-	public CommentController(PriceListService priceListRepository, CommentService manager, UserService userService) {
+	public CommentController(PriceListService priceListRepository, CommentService manager, UserService userService, UserInfoService userInfoService) {
 		this.priceListService = priceListRepository;
 		this.commentService = manager;
 		this.userService = userService;
+		this.userInfoService = userInfoService;
 	}
 
 	@GetMapping
+	@JsonView(JsonCommentView.IdMessageDatePriceListUserInfo.class)
 	public List<CommentDto> getComments(){
-
 		return commentService.getAll();
 	}
 
 	@GetMapping("byPriceListId/{id}")
+	@JsonView(JsonCommentView.IdMessageDatePriceListUserInfo.class)
 	public List<CommentDto> getCommentByPriceListDto(@PathVariable Long id){
 		return commentService.findAllByPriceListIdOrderByDateTime(id);
 	}
@@ -43,13 +49,18 @@ public class CommentController {
 
 	@PostMapping(value = "commentToPriceList/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('USER')")
+	@JsonView(JsonCommentView.IdMessageDatePriceListUserInfo.class)
 	public CommentDto addComment(@PathVariable Long id, @RequestBody CommentDto commentDto, Authentication authentication){
 		var user = userService.findByUserName(authentication.getName());
-		commentDto.setUserInfo(user.getUserInfo());
-		user.getUserInfo().getComments().add(commentDto);
-		commentDto.setPriceList(priceListService.getById(id));
+		var priceList = priceListService.getById(id);
+		commentDto.setPriceList(null);
 		commentDto.setLocalDateTime(LocalDateTime.now());
-		return commentService.save(commentDto);
+		commentDto = commentService.save(commentDto);
+		priceList.getComments().add(commentDto);
+		priceListService.save(priceList);
+		user.getUserInfo().getComments().add(commentDto);
+		userInfoService.save(user.getUserInfo());
+		return commentService.getById(commentDto.getId());
 	}
 
 	@DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

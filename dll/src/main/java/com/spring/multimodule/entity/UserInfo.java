@@ -28,7 +28,8 @@ public class UserInfo {
 	@Column
 	private String phone;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
+	@PrimaryKeyJoinColumn
 	private User user;
 
 	@OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)

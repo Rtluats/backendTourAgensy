@@ -15,7 +15,7 @@ import java.util.List;
 public class CountryDto {
 	@JsonView({JsonCountryView.Id.class, JsonCityView.IdNameCountryHotel.class})
 	private Long id;
-	@JsonView({JsonCountryView.IdName.class , JsonCityView.IdNameCountryHotel.class})
+	@JsonView({JsonCountryView.IdName.class , JsonCityView.IdNameCountryHotel.class, JsonCityView.IdNameCountry.class})
 	private String name;
 	@JsonView(JsonCountryView.IdNameCities.class)
 	private List<CityDto> cities;

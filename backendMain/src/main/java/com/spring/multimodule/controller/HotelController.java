@@ -39,6 +39,10 @@ public class HotelController {
 	@PreAuthorize("hasRole('MANAGER')")
 	@JsonView(JsonHotelView.IdNameCityPriceList.class)
 	public HotelDto addHotel(@RequestBody HotelDto hotel) {
+		var city = hotel.getCity();
+		hotel.setCity(null);
+		hotel = hotelService.save(hotel);
+		hotel.setCity(city);
 		return hotelService.save(hotel);
 	}
 

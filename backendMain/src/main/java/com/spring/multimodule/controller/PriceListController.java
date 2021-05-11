@@ -56,13 +56,18 @@ public class PriceListController {
 	@PreAuthorize("hasRole('MANAGER')")
 	@JsonView(JsonPriceListView.IdPriceDiscountNumberOfDaysHotel.class)
 	public PriceListDto addPriceList(@RequestBody PriceListDto priceList){
+		var hotel = priceList.getHotel();
+		priceList.setHotel(null);
+		priceList = priceListService.save(priceList);
+		priceList.setHotel(hotel);
 		return priceListService.save(priceList);
 	}
 
-	@PostMapping("/byuATour/{id}")
-	@PreAuthorize("hasAnyRole('USER')")
+	@PostMapping("/buyATour/{id}")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> buyATour(@PathVariable Long id, Authentication authentication){
 		try {
+			System.out.println(1);
 			UserDto user = userService.findByUserName(authentication.getName());
 			UserInfoDto info = userInfoService.getById(user.getUserInfo().getId());
 			PriceListDto priceList = priceListService.getById(id);
@@ -72,12 +77,14 @@ public class PriceListController {
 				priceList.getGroup().setUserInfoList(new HashSet<>());
 				priceList.getGroup().getUserInfoList().add(info);
 				info.getGroups().add(priceList.getGroup());
+				System.out.println(2);
 				priceListService.save(priceList); // ?? достаточно?
 			}
-
+			System.out.println(3);
 			mailService.sendDocToEmail(user.getEmail(), priceListService.getById(id).getTour().getTitle());
 		}catch (Exception ex){
-			ResponseEntity.badRequest()
+			ex.printStackTrace();
+			return ResponseEntity.badRequest()
 					.body(new MessageResponse("Throw error when try to send doc to email"));
 		}
 		return ResponseEntity.ok()

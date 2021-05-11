@@ -31,7 +31,7 @@ public class PriceListDto {
 	private HotelDto hotel;
 	@JsonView(JsonPriceListView.IPDNODHT.class)
 	private TourDto tour;
-	@JsonView(JsonPriceListView.IPDNODHTG.class)
+	@JsonView(JsonPriceListView.IPDNODHTG.class )
 	private GroupDto group;
 	private List<CommentDto> comments;
 }

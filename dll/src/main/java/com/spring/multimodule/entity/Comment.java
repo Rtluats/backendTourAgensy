@@ -26,8 +26,10 @@ public class Comment {
 	private LocalDateTime localDateTime;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "priceList_id")
 	private PriceList priceList;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_info_id")
 	private UserInfo userInfo;
 }
