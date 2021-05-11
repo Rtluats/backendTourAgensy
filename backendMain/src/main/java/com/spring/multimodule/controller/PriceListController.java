@@ -63,7 +63,7 @@ public class PriceListController {
 		return priceListService.save(priceList);
 	}
 
-	@PostMapping("/buyATour/{id}")
+	@GetMapping("/buyATour/{id}")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> buyATour(@PathVariable Long id, Authentication authentication){
 		try {
