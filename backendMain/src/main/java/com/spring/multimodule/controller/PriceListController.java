@@ -42,7 +42,7 @@ public class PriceListController {
 		return priceListService.getAll();
 	}
 
-	@GetMapping("/{name}")
+	@GetMapping("/byCityName/{name}")
 	@JsonView(JsonPriceListView.IdPriceDiscountNumberOfDaysHotel.class)
 	public List<PriceListDto> getPriceListsByCityName(@PathVariable String name){ return priceListService.getPriceListByCityName(name); }
 

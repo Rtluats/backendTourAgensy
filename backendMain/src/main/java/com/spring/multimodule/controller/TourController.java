@@ -41,7 +41,7 @@ public class TourController {
 	@GetMapping("/byTitle/{title}")
 	@JsonView(JsonTourView.IdTitleDescriptionPriceLists.class)
 	public List<TourDto> getTourByTitle(@PathVariable String title){
-		return tourService.getByTourTitle(title);
+		return title.isBlank()?tourService.getAll():tourService.getByTourTitle(title);
 	}
 
 	@PostMapping

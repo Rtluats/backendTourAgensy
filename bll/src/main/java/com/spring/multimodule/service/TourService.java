@@ -6,7 +6,6 @@ import com.spring.multimodule.repository.TourRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 
@@ -29,7 +28,7 @@ public class TourService {
 
 	public List<TourDto> getByTourTitle(String title){
 		return repository.findByTitleContainsOrderByTitle(title).stream()
-				.filter(tour -> tour.getTitle().toLowerCase(Locale.ENGLISH).contains(title.toLowerCase(Locale.ENGLISH)))
+				.filter(tour -> tour.getTitle().contains(title))
 				.map(mapper::toDto)
 				.collect(Collectors.toList());
 	}

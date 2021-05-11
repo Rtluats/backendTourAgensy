@@ -32,6 +32,7 @@ public class CityController {
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@JsonView(JsonCityView.IdNameCountryHotel.class)
 	public ResponseEntity<CityDto> getCity(@PathVariable Long id){
 		return ResponseEntity.ok(cityService.getById(id));
 	}
